@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../css/tp.css">
+</head>
+<body>
+    <div class="dash" id="Dashboard">
+        <div class="row">
+            <div class="col-3 vh-100" style="background-color:#202021">
+                <div class="outer">
+                    <div class="row">
+                        <div class="logo-section">
+                            <img id="imgg" src="../images/ii.png">
+                            <h4 class="text-white text-center">Artemis.ai</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button class="history-button text-white btn" id="history-button">History</button>
+                        <button class="history-button text-white btn" id="more-button">More</button>
+                    </div>
+                    <div class="profile-section">
+                        <div class="text-white"></div>
+                        <img src="../images/profile-user.png" id="imgg">
+                        <span class="about text-white">
+                            <p id="name"></p>
+                            <p id="mail"></p>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div id = "statsID" class="col-5" style="background-color:bisque">
+                <div class="row outer-2">
+                    <div class="d-flex align-items-center">
+                        <span>
+                            <h4 class="heading-2">Statistics</h4>
+                            <p class="date" id="date"></p>
+                        </span>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between stats">
+                        <span>
+                            <h6>Benign Connections</h6>
+                            <p id="benignDetails"></p>
+                        </span>
+                        <span>
+                            <h6>Malicious Connections</h6>
+                            <p id="maliciousDetails"></p>
+                        </span>
+                    </div>
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>
+                                <p class="history">All time</p>
+                            </span>
+                            <span>
+                                <button id="deletealltime">
+                                    <svg viewBox="0 0 15 17.5" height="17.5" width="15" xmlns="http://www.w3.org/2000/svg" class="icon-1">
+                                    <path transform="translate(-2.5 -1.25)" d="M15,18.75H5A1.251,1.251,0,0,1,3.75,17.5V5H2.5V3.75h15V5H16.25V17.5A1.251,1.251,0,0,1,15,18.75ZM5,5V17.5H15V5Zm7.5,10H11.25V7.5H12.5V15ZM8.75,15H7.5V7.5H8.75V15ZM12.5,2.5h-5V1.25h5V2.5Z" id="Fill"></path>
+                                  </svg>
+                                  </button>
+                            </span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between stats">
+                            <span>
+                                <h6>Benign Connections</h6>
+                                <p id="allTimeBenign"></p>
+                            </span>
+                            <span>
+                                <h6>Malicious Connections</h6>
+                                <p id="allTimeMalicious"></p>
+                            </span>
+                        </div>
+                        <div style="margin-left: -25px;">
+                            <canvas id="myChart-1" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="container">
+                        <h4 id="info"></h4>
+                        <div id="start-container">
+                            <button class="start text-white btn" id="startButton">Start</button>
+                        </div>
+                        <div class="loader" style="display: none;" id="loaderShow"><span></span></div>
+                        <button class="stop btn" id="stopButton">Stop</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="history-page" id="history-page" style="display: none">
+        <div class="buttons">
+            <button class="back-button" id="back-button1">
+                <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="37" cy="37" r="35.5" stroke="white" stroke-width="3"></circle>
+                    <path d="M25 35.5C24.1716 35.5 23.5 36.1716 23.5 37C23.5 37.8284 24.1716 38.5 25 38.5V35.5ZM49.0607 38.0607C49.6464 37.4749 49.6464 36.5251 49.0607 35.9393L39.5147 26.3934C38.9289 25.8076 37.9792 25.8076 37.3934 26.3934C36.8076 26.9792 36.8076 27.9289 37.3934 28.5147L45.8787 37L37.3934 45.4853C36.8076 46.0711 36.8076 47.0208 37.3934 47.6066C37.9792 48.1924 38.9289 48.1924 39.5147 47.6066L49.0607 38.0607ZM25 38.5L48 38.5V35.5L25 35.5V38.5Z" fill="white"></path>
+                </svg>
+                <span>Back</span>
+            </button>
+            <h2>History</h2>
+            <button class="btn" id="clear-all">
+                Clear all
+            </button>
+        </div>
+        <h2 id="show" class="text-center" style="display: block">Looks like your PC is safe</h2>
+        <div id="cards">
+        </div>
+    </div>
+    <div class="more-page" id="more-page" style="display:none">
+        <button class="back-button" id="back-button2">
+            <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="37" cy="37" r="35.5" stroke="white" stroke-width="3"></circle>
+                <path d="M25 35.5C24.1716 35.5 23.5 36.1716 23.5 37C23.5 37.8284 24.1716 38.5 25 38.5V35.5ZM49.0607 38.0607C49.6464 37.4749 49.6464 36.5251 49.0607 35.9393L39.5147 26.3934C38.9289 25.8076 37.9792 25.8076 37.3934 26.3934C36.8076 26.9792 36.8076 27.9289 37.3934 28.5147L45.8787 37L37.3934 45.4853C36.8076 46.0711 36.8076 47.0208 37.3934 47.6066C37.9792 48.1924 38.9289 48.1924 39.5147 47.6066L49.0607 38.0607ZM25 38.5L48 38.5V35.5L25 35.5V38.5Z" fill="white"></path>
+            </svg>
+            <span>Back</span>
+        </button>
+        <div class="container mb-3">
+            <h2>More information</h2>
+        </div>
+
+        <div class="section row" id="more-container">
+            <div class="col text-white m-3">
+                <div class="row card card1">
+                    <div class="card-title text-center">Additional information</div>
+                    <div class="card-more card-body">
+                        <h6 class="data" id="src_ip">source ip : Waiting for information</h6>
+                        <h6 class="data" id="dst_ip">destination ip : Waiting for information</h6>
+                        <h6 class="data" id="dst_port">destination port : Waiting for information</h6>
+                    </div>
+                </div>
+                <div class="row card card1">
+                    <div class="card-title text-center">Last connection</div>
+                    <div class="card-more card-body">
+                        <h6 class="data" id="more_date">Waiting for information</h6>
+                        <h6 class="data" id="more_attack">Waiting for information</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="col text-center text-white m-3 chart-card">
+                <div class="card1" id="card3">
+                    <div class="card-title text-center">Port connections</div>
+                    <div class="card-more" style="height:100% ; width:100%;display: flex;justify-content: center;align-items: center; background-color: transparent;">
+                        <canvas id="bubble-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <script src="/Users/rachitdas/Desktop/Artemis.ai/final-a/src/functionality.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
